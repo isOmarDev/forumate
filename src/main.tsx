@@ -1,17 +1,23 @@
-// eslint-disable-next-line import/order
-import { scan } from 'react-scan';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { scan } from 'react-scan';
+
+import { App } from './app';
+import { enableMocking } from './tests/mocks';
 
 import './index.css';
-import App from './app.tsx';
 
 scan({
   enabled: true,
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+const root = document.getElementById('root');
+if (!root) throw new Error('No root element found');
+
+enableMocking().then(() => {
+  createRoot(root).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+});
