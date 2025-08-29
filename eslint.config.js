@@ -38,6 +38,7 @@ export default tseslint.config([
       // ...tailwind.configs['flat/recommended'],
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': 'off',
+      'linebreak-style': ['error', 'unix'],
 
       /* prettier */
       'prettier/prettier': ['error', {}, { usePrettierrc: true }],
