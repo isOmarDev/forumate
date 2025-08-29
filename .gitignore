@@ -7,10 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
-dist
-dist-ssr
-*.local
+/.pnp
+.pnp.*
+
+# Testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +29,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# production
+dist
+dist-ssr
+
+# Misc
+*.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Typescript
+*.tsbuildinfo
