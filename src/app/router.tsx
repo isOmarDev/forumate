@@ -27,18 +27,31 @@ const convert = (queryClient: QueryClient) => (m: any) => {
   };
 };
 
+const HydrateFallback = () => null;
+
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
       path: paths.home.path,
+      lazy: () => import('./routes/home').then(convert(queryClient)),
+      HydrateFallback,
+    },
+    {
+      path: paths.auth.login.path,
+      lazy: () => import('./routes/login').then(convert(queryClient)),
+      HydrateFallback,
+    },
+    {
+      path: paths.auth.register.path,
       lazy: () =>
-        import('./routes/landing').then(convert(queryClient)),
-      hydrateFallbackElement: <div>Loading...</div>,
+        import('./routes/register').then(convert(queryClient)),
+      HydrateFallback,
     },
     {
       path: '*',
       lazy: () =>
         import('./routes/not-found').then(convert(queryClient)),
+      HydrateFallback,
     },
   ]);
 
