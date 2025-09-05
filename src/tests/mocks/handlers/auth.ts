@@ -27,7 +27,7 @@ type LoginBody = {
 };
 
 export const authHandlers = [
-  http.post(`${env.API_URL}/register`, async ({ request }) => {
+  http.post(`${env.APP_API_URL}/register`, async ({ request }) => {
     await networkDelay();
     try {
       const userObject = (await request.json()) as RegisterBody;
@@ -110,7 +110,7 @@ export const authHandlers = [
     }
   }),
 
-  http.post(`${env.API_URL}/login`, async ({ request }) => {
+  http.post(`${env.APP_API_URL}/login`, async ({ request }) => {
     await networkDelay();
 
     try {
@@ -134,7 +134,7 @@ export const authHandlers = [
     }
   }),
 
-  http.post(`${env.API_URL}/logout`, async () => {
+  http.post(`${env.APP_API_URL}/logout`, async () => {
     await networkDelay();
 
     // todo: remove once tests in Github Actions are fixed
@@ -150,7 +150,7 @@ export const authHandlers = [
     );
   }),
 
-  http.get(`${env.API_URL}/me`, async ({ cookies }) => {
+  http.get(`${env.APP_API_URL}/me`, async ({ cookies }) => {
     await networkDelay();
 
     try {
