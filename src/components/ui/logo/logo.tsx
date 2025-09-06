@@ -13,6 +13,7 @@ import {
 export type LogoProps = LogoVariantsProps & {
   className?: string;
   withText?: boolean;
+  withLink?: boolean;
 };
 
 export const Logo = ({
@@ -20,12 +21,10 @@ export const Logo = ({
   variant,
   className = '',
   withText = false,
+  withLink = true,
 }: LogoProps) => {
-  return (
-    <Link
-      to="/"
-      className={cn('flex items-center gap-2 font-medium', className)}
-    >
+  const logoContent = (
+    <>
       <div className={iconContainerVariants({ size, variant })}>
         <Bubbles className={iconVariants({ size })} />
       </div>
@@ -35,6 +34,21 @@ export const Logo = ({
           Forumate
         </span>
       )}
+    </>
+  );
+
+  return withLink ? (
+    <Link
+      to="/"
+      className={cn('flex items-center gap-2 font-medium', className)}
+    >
+      {logoContent}
     </Link>
+  ) : (
+    <div
+      className={cn('flex items-center gap-2 font-medium', className)}
+    >
+      {logoContent}
+    </div>
   );
 };
