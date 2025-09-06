@@ -1,6 +1,4 @@
-import { Bubbles } from 'lucide-react';
 import type { PropsWithChildren } from 'react';
-import { Link } from 'react-router';
 
 import {
   Card,
@@ -10,6 +8,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { cn } from '@/lib/cn';
+
+import { Logo } from '../ui/logo';
 
 type AuthLayoutProps = PropsWithChildren<{
   title: string;
@@ -29,23 +29,10 @@ export const AuthLayout = ({
           'bg-muted',
         )}
       >
-        <div className="w-full max-w-sm">
-          <Link
-            to="/"
-            className={cn(
-              'mb-6 flex items-center justify-center gap-2',
-              'font-medium',
-            )}
-          >
-            <div
-              className={cn(
-                'flex size-10 items-center justify-center',
-                'rounded-lg bg-primary text-primary-foreground',
-              )}
-            >
-              <Bubbles />
-            </div>
-          </Link>
+        <div className="w-full max-w-sm text-center">
+          <div className="mb-6 flex justify-center">
+            <Logo />
+          </div>
 
           <Card>
             <CardHeader className="text-center">
