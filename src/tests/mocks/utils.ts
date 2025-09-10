@@ -20,12 +20,13 @@ export const decode = (str: string) => {
 };
 
 export const hash = (str: string) => {
-  let hash = 5381,
-    i = str.length;
+  let hash = 5381;
+  let i = str.length;
 
   while (i) {
     hash = (hash * 33) ^ str.charCodeAt(--i);
   }
+
   return String(hash >>> 0);
 };
 
@@ -65,17 +66,17 @@ export function authenticate({
     },
   });
 
-  if (user?.password === hash(password)) {
-    const sanitizedUser = sanitizeUser(user);
-    const encodedToken = encode(sanitizedUser);
-    return { user: sanitizedUser, jwt: encodedToken };
+  if (user?.password !== hash(password)) {
+    const error = new Error('Invalid username or password');
+    throw error;
   }
 
-  const error = new Error('Invalid username or password');
-  throw error;
+  const sanitizedUser = sanitizeUser(user);
+  const encodedToken = encode(sanitizedUser);
+  return { user: sanitizedUser, jwt: encodedToken };
 }
 
-export const AUTH_COOKIE = `bulletproof_react_app_token`;
+export const AUTH_COOKIE = `forumate_app_token`;
 
 export function requireAuth(cookies: Record<string, string>) {
   try {
