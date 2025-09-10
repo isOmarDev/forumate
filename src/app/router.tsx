@@ -5,6 +5,8 @@ import { RouterProvider } from 'react-router/dom';
 
 import { paths } from '@/config/paths';
 
+import { AuthRoute } from './routes/auth/auth-route';
+
 // import {
 //   default as AppRoot,
 //   ErrorBoundary as AppRootErrorBoundary,
@@ -37,15 +39,23 @@ export const createAppRouter = (queryClient: QueryClient) =>
       HydrateFallback,
     },
     {
-      path: paths.auth.login.path,
-      lazy: () => import('./routes/login').then(convert(queryClient)),
-      HydrateFallback,
-    },
-    {
-      path: paths.auth.register.path,
-      lazy: () =>
-        import('./routes/register').then(convert(queryClient)),
-      HydrateFallback,
+      element: <AuthRoute />,
+      children: [
+        {
+          path: paths.auth.login.path,
+          lazy: () =>
+            import('./routes/auth/login').then(convert(queryClient)),
+          HydrateFallback,
+        },
+        {
+          path: paths.auth.register.path,
+          lazy: () =>
+            import('./routes/auth/register').then(
+              convert(queryClient),
+            ),
+          HydrateFallback,
+        },
+      ],
     },
     {
       path: '*',
