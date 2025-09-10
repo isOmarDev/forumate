@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren } from 'react';
 
 import {
   Card,
@@ -29,7 +29,7 @@ export const AuthLayout = ({
           'bg-muted',
         )}
       >
-        <div className="w-full max-w-sm text-center">
+        <div className="w-full max-w-sm">
           <div className="mb-6 flex justify-center">
             <Logo />
           </div>
