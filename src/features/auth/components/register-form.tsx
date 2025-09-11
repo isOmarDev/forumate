@@ -1,41 +1,28 @@
-import { useEffect } from 'react';
-import { type SubmitHandler } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
-import { Form, Field, Input, useZodForm } from '@/components/ui/form';
+import { Form, Field, Input } from '@/components/ui/form';
+import { Error } from '@/components/ui/form/error';
 import { Stack } from '@/components/ui/stack';
 import { paths } from '@/config/paths';
-import {
-  registerInputSchema,
-  useRegister,
-  type RegisterInput,
-} from '@/lib/auth';
 
+import { useRegisterForm } from '../hooks/use-register-form';
 import { AuthRedirect } from '../shared';
 
-type RegisterFormProps = {
-  onSuccess: () => void;
-};
-
-export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
-  const registerUser = useRegister({ onSuccess });
+export const RegisterForm = () => {
+  const { zodForm, registerUserMutation, onSubmit } =
+    useRegisterForm();
 
   const {
     register,
-    handleSubmit,
-    setFocus,
     formState: { errors },
-  } = useZodForm(registerInputSchema);
-
-  const onSubmit: SubmitHandler<RegisterInput> = (data) =>
-    registerUser.mutate(data);
-
-  useEffect(() => {
-    setFocus('firstName');
-  }, [setFocus]);
+  } = zodForm;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={onSubmit}>
+      <Error
+        className="rounded-sm bg-red-100 p-2"
+        message={errors.root?.message}
+      />
+
       <div className="grid gap-6">
         <Stack gap={4} align="start">
           <Field
@@ -80,7 +67,10 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
           />
         </Field>
 
-        <Button type="submit" disabled={registerUser.isPending}>
+        <Button
+          type="submit"
+          disabled={registerUserMutation.isPending}
+        >
           Register
         </Button>
       </div>
