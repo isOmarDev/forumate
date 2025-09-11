@@ -7,7 +7,7 @@ import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 
-// import { AuthLoader } from '@/lib/auth';
+import { AuthLoader } from '@/lib/auth';
 import { queryConfig } from '@/lib/react-query';
 
 // import { MainErrorFallback } from '@/components/errors/main';
@@ -39,7 +39,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
           <QueryClientProvider client={queryClient}>
             {import.meta.env.DEV && <ReactQueryDevtools />}
             {/* <Notifications /> */}
-            {/* <AuthLoader
+            <AuthLoader
               renderLoading={() => (
                 <div className="flex h-screen w-screen items-center justify-center">
                   Loading...
@@ -47,8 +47,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
               )}
             >
               {children}
-            </AuthLoader> */}
-            {children}
+            </AuthLoader>
           </QueryClientProvider>
         </HelmetProvider>
       </ErrorBoundary>
