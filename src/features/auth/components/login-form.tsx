@@ -1,40 +1,26 @@
-import { useEffect } from 'react';
-import { type SubmitHandler } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
-import { Form, Field, Input, useZodForm } from '@/components/ui/form';
+import { Form, Field, Input } from '@/components/ui/form';
+import { Error } from '@/components/ui/form/error';
 import { paths } from '@/config/paths';
-import {
-  loginInputSchema,
-  useLogin,
-  type LoginInput,
-} from '@/lib/auth';
 
+import { useLoginForm } from '../hooks/use-login-form';
 import { AuthRedirect } from '../shared';
 
-type LoginFormProps = {
-  onSuccess: () => void;
-};
-
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-  const login = useLogin({ onSuccess });
+export const LoginForm = () => {
+  const { zodForm, loginUserMutation, onSubmit } = useLoginForm();
 
   const {
     register,
-    handleSubmit,
-    setFocus,
     formState: { errors },
-  } = useZodForm(loginInputSchema);
-
-  const onSubmit: SubmitHandler<LoginInput> = (data) =>
-    login.mutate(data);
-
-  useEffect(() => {
-    setFocus('email');
-  }, [setFocus]);
+  } = zodForm;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={onSubmit}>
+      <Error
+        className="rounded-sm bg-red-100 p-2"
+        message={errors.root?.message}
+      />
+
       <div className="grid gap-6">
         <Field id="email" label="Email" error={errors.email}>
           <Input
@@ -53,7 +39,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
           />
         </Field>
 
-        <Button type="submit" isLoading={login.isPending}>
+        <Button type="submit" isLoading={loginUserMutation.isPending}>
           Login
         </Button>
       </div>
