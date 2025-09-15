@@ -2,12 +2,19 @@ import {
   render as rtlRender,
   screen,
   waitForElementToBeRemoved,
+  type RenderOptions,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Cookies from 'js-cookie';
-import { RouterProvider, createMemoryRouter } from 'react-router';
+import {
+  RouterProvider,
+  createMemoryRouter,
+  type RouteObject,
+} from 'react-router';
 
 import { AppProvider } from '@/app/provider';
+import HomeRoute from '@/app/routes/home';
+import { paths } from '@/config/paths';
 
 import {
   createDiscussion as generateDiscussion,
@@ -56,24 +63,40 @@ const initializeUser = async (user: any) => {
   }
 };
 
+type RenderAppOptions = Omit<RenderOptions, 'queries'> &
+  Partial<{
+    user: string | null;
+    url: string;
+    path: string;
+    routes: RouteObject[];
+  }>;
+
 export const renderApp = async (
-  ui: any,
-  {
+  ui: React.ReactNode,
+  renderOptions: RenderAppOptions = {},
+) => {
+  const {
     user,
     url = '/',
     path = '/',
-    ...renderOptions
-  }: Record<string, any> = {},
-) => {
-  // if you want to render the app unauthenticated then pass "null" as the user
+    routes = [],
+    ...restRenderOptions
+  } = renderOptions;
+
+  // Pass "null" as the user to render the app unauthenticated
   const initializedUser = await initializeUser(user);
 
   const router = createMemoryRouter(
     [
       {
+        path: paths.home.path,
+        element: <HomeRoute />,
+      },
+      {
         path: path,
         element: ui,
       },
+      ...routes,
     ],
     {
       initialEntries: url ? ['/', url] : ['/'],
@@ -90,7 +113,7 @@ export const renderApp = async (
           </AppProvider>
         );
       },
-      ...renderOptions,
+      ...restRenderOptions,
     }),
     user: initializedUser,
   };
