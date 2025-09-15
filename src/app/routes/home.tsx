@@ -12,10 +12,12 @@ const HomeRoute = () => {
   return (
     <>
       <Head title={HEAD_TITLE} description={HEAD_DESCRIPTION} />
-      <h1>home here</h1>
-      <Button onClick={() => logout.mutate({})}>
-        Logout madafaka
-      </Button>
+      <div data-testid="home">
+        <h1>home here</h1>
+        <Button onClick={() => logout.mutate({})}>
+          Logout madafaka
+        </Button>
+      </div>
     </>
   );
 };
