@@ -1,22 +1,45 @@
-import { renderApp, screen, waitFor } from '@/tests/test-utils';
+import { paths } from '@/config/paths';
+import { renderApp, screen } from '@/tests/test-utils';
 
-import LoginRoute from '../auth/login';
+import { AuthRoute } from '../auth-route';
+import LoginRoute from '../login';
 
-it('renders login page at "/login" when user is not logged in', async () => {
-  renderApp(<LoginRoute />, {
-    user: null,
-    path: '/login',
-    url: '/login',
-  });
+describe('LoginRoute', () => {
+  it('renders login page at "/login" when user is not logged in', async () => {
+    await renderApp(undefined, {
+      user: null,
+      url: paths.auth.login.path,
+      routes: [
+        {
+          element: <AuthRoute />,
+          children: [
+            { path: paths.auth.login.path, element: <LoginRoute /> },
+          ],
+        },
+      ],
+    });
 
-  await waitFor(() => {
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Welcome back' }),
+      await screen.findByTestId('login-form'),
     ).toBeInTheDocument();
   });
-});
 
-it.todo(
-  'redirects to home page when user is already logged in',
-  async () => {},
-);
+  it('redirects to home page when user is already logged in', async () => {
+    await renderApp(undefined, {
+      url: paths.auth.login.path,
+      routes: [
+        {
+          element: <AuthRoute />,
+          children: [
+            { path: paths.auth.login.path, element: <LoginRoute /> },
+          ],
+        },
+      ],
+    });
+
+    expect(await screen.findByTestId('home')).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('login-form'),
+    ).not.toBeInTheDocument();
+  });
+});
