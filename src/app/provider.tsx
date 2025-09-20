@@ -7,6 +7,7 @@ import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 
+import { LogoIcon } from '@/components/ui/logo';
 import { AuthLoader } from '@/lib/auth';
 import { queryConfig } from '@/lib/react-query';
 
@@ -42,7 +43,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             <AuthLoader
               renderLoading={() => (
                 <div className="flex h-screen w-screen items-center justify-center">
-                  Loading...
+                  <LogoIcon size="lg" className="animate-bounce" />
                 </div>
               )}
             >
