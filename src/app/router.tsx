@@ -3,16 +3,10 @@ import { useMemo } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
+import { AppLayout } from '@/components/layouts/app-layout';
 import { paths } from '@/config/paths';
 
 import { AuthRoute } from './routes/auth/auth-route';
-
-// import {
-//   default as AppRoot,
-//   ErrorBoundary as AppRootErrorBoundary,
-// } from './routes/app/root';
-
-// import { ProtectedRoute } from '@/lib/auth';
 
 const convert = (queryClient: QueryClient) => (m: any) => {
   const {
@@ -34,8 +28,14 @@ const HydrateFallback = () => null;
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
-      path: paths.home.path,
-      lazy: () => import('./routes/home').then(convert(queryClient)),
+      Component: AppLayout,
+      children: [
+        {
+          path: paths.home.path,
+          lazy: () =>
+            import('./routes/home').then(convert(queryClient)),
+        },
+      ],
       HydrateFallback,
     },
     {
@@ -45,7 +45,6 @@ export const createAppRouter = (queryClient: QueryClient) =>
           path: paths.auth.login.path,
           lazy: () =>
             import('./routes/auth/login').then(convert(queryClient)),
-          HydrateFallback,
         },
         {
           path: paths.auth.register.path,
@@ -53,9 +52,9 @@ export const createAppRouter = (queryClient: QueryClient) =>
             import('./routes/auth/register').then(
               convert(queryClient),
             ),
-          HydrateFallback,
         },
       ],
+      HydrateFallback,
     },
     {
       path: '*',
