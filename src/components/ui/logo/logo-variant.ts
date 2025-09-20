@@ -1,8 +1,17 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
+const logoVariants = cva('flex items-center justify-center gap-2', {
+  variants: {
+    orientation: { horizontal: 'flex-row', veritcal: 'flex-col' },
+  },
+  defaultVariants: {
+    orientation: 'horizontal',
+  },
+});
+
 // Icon container variants
-const iconContainerVariants = cva(
-  'flex items-center justify-center rounded-md',
+const logoIconWrapperVariants = cva(
+  'flex items-center justify-center gap-2 rounded-md',
   {
     variants: {
       size: {
@@ -25,8 +34,23 @@ const iconContainerVariants = cva(
   },
 );
 
+// Icon variants
+const logoIconVariants = cva('', {
+  variants: {
+    size: {
+      sm: 'size-4',
+      md: 'size-6',
+      lg: 'size-8',
+      xl: 'size-10',
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 // Text variants
-const textVariants = cva('', {
+const logoTextVariants = cva('', {
   variants: {
     size: {
       sm: 'text-sm',
@@ -46,28 +70,20 @@ const textVariants = cva('', {
   },
 });
 
-// Icon variants
-const iconVariants = cva('', {
-  variants: {
-    size: {
-      sm: 'size-4',
-      md: 'size-6',
-      lg: 'size-8',
-      xl: 'size-10',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
-
-type LogoVariantsProps = VariantProps<typeof iconContainerVariants> &
-  VariantProps<typeof textVariants> &
-  VariantProps<typeof iconVariants>;
+type LogoVariantsProps = VariantProps<typeof logoVariants>;
+type LogoIconWrapperVariantsProps = VariantProps<
+  typeof logoIconWrapperVariants
+>;
+type LogoIconVariantsProps = VariantProps<typeof logoIconVariants>;
+type LogoTextVariantsProps = VariantProps<typeof logoTextVariants>;
 
 export {
-  iconContainerVariants,
-  textVariants,
-  iconVariants,
+  logoVariants,
+  logoIconWrapperVariants,
+  logoIconVariants,
+  logoTextVariants,
   type LogoVariantsProps,
+  type LogoIconWrapperVariantsProps,
+  type LogoIconVariantsProps,
+  type LogoTextVariantsProps,
 };
