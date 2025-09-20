@@ -1,9 +1,14 @@
+import type { AxiosError } from 'axios';
 import { configureAuth } from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router';
 import { z } from 'zod';
 
 import { paths } from '@/config/paths';
-import type { AuthResponse, User } from '@/types/api';
+import type {
+  ApiErrorResponse,
+  AuthResponse,
+  User,
+} from '@/types/api';
 
 import { api } from './api-client';
 
@@ -78,7 +83,12 @@ export const {
   useLogout,
   useRegister,
   AuthLoader,
-} = configureAuth(authConfig);
+} = configureAuth<
+  User,
+  AxiosError<ApiErrorResponse>,
+  LoginInput,
+  RegisterInput
+>(authConfig);
 
 export const ProtectedRoute = ({
   children,
