@@ -7,13 +7,10 @@ import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { LogoIcon } from '@/components/ui/logo';
+import { MainErrorFallback } from '@/components/errors/main';
+import { LoadingScreen } from '@/components/loaders/loading-screen';
 import { AuthLoader } from '@/lib/auth';
 import { queryConfig } from '@/lib/react-query';
-
-// import { MainErrorFallback } from '@/components/errors/main';
-// import { Notifications } from '@/components/ui/notifications';
-// import { Spinner } from '@/components/ui/spinner';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -28,25 +25,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   );
 
   return (
-    <React.Suspense
-      fallback={
-        <div className="flex h-screen w-screen items-center justify-center">
-          loading...
-        </div>
-      }
-    >
-      <ErrorBoundary FallbackComponent={() => <div>error</div>}>
+    <React.Suspense fallback={<LoadingScreen />}>
+      <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <HelmetProvider>
           <QueryClientProvider client={queryClient}>
             {import.meta.env.DEV && <ReactQueryDevtools />}
-            {/* <Notifications /> */}
-            <AuthLoader
-              renderLoading={() => (
-                <div className="flex h-screen w-screen items-center justify-center">
-                  <LogoIcon size="lg" className="animate-bounce" />
-                </div>
-              )}
-            >
+            <AuthLoader renderLoading={LoadingScreen}>
               {children}
             </AuthLoader>
           </QueryClientProvider>
