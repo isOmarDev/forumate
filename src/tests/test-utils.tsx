@@ -93,7 +93,7 @@ export const renderApp = async (
         element: <HomeRoute />,
       },
       {
-        path: path,
+        path,
         element: ui,
       },
       ...routes,
