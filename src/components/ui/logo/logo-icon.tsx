@@ -1,4 +1,4 @@
-import { Bubbles } from 'lucide-react';
+import { FishSymbolIcon } from 'lucide-react';
 
 import { cn } from '@/lib/cn';
 
@@ -36,7 +36,7 @@ export const LogoIcon = ({
       )}
       {...props}
     >
-      <Bubbles
+      <FishSymbolIcon
         className={cn(
           logoIconVariants({
             size,
@@ -73,7 +73,7 @@ export const LogoIconLink = ({
       )}
       {...props}
     >
-      <Bubbles
+      <FishSymbolIcon
         className={cn(
           logoIconVariants({
             size,
