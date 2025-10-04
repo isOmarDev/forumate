@@ -11,7 +11,7 @@ const logoVariants = cva('flex items-center justify-center gap-2', {
 
 // Icon container variants
 const logoIconWrapperVariants = cva(
-  'flex items-center justify-center gap-2 rounded-md',
+  'flex items-center justify-center gap-2 rounded-lg',
   {
     variants: {
       size: {
@@ -25,6 +25,7 @@ const logoIconWrapperVariants = cva(
         secondary:
           'border border-border bg-transparent text-foreground',
         inverted: 'bg-background text-foreground',
+        ghost: 'bg-transparent text-foreground',
       },
     },
     defaultVariants: {
