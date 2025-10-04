@@ -1,4 +1,4 @@
-import { AuthLayout } from '@/components/layouts/auth-layout';
+import { AuthLayout } from '@/components/layouts/auth';
 import { Head } from '@/components/seo/head';
 import { LoginForm } from '@/features/auth/components/login-form';
 

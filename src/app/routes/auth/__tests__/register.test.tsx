@@ -5,7 +5,7 @@ import { AuthRoute } from '../auth-route';
 import ReigsterRoute from '../register';
 
 it('should render register page at root path "/" when user is not logged in', async () => {
-  renderApp(undefined, {
+  await renderApp(undefined, {
     user: null,
     url: paths.auth.register.path,
     routes: [
