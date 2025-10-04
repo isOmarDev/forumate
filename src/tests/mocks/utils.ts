@@ -101,6 +101,7 @@ export function requireAuth(cookies: Record<string, string>) {
 
     return { user: sanitizeUser(user) };
   } catch (err: any) {
+    console.error(err);
     return { error: 'Unauthorized', user: null };
   }
 }
