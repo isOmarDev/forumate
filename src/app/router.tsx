@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
-import { AppLayout } from '@/components/layouts/app-layout';
+import { AppLayout } from '@/components/layouts/app';
 import { paths } from '@/config/paths';
 
 import { AuthRoute } from './routes/auth/auth-route';
@@ -34,6 +34,38 @@ export const createAppRouter = (queryClient: QueryClient) =>
           path: paths.home.path,
           lazy: () =>
             import('./routes/home').then(convert(queryClient)),
+        },
+        {
+          path: paths.popular.path,
+          lazy: () =>
+            import('./routes/popular').then(convert(queryClient)),
+        },
+        {
+          path: paths.topics.root.path,
+          lazy: () =>
+            import('./routes/topics').then(convert(queryClient)),
+          children: [
+            {
+              path: 'new_and_updates',
+              lazy: () =>
+                import('./routes/topic').then(convert(queryClient)),
+            },
+            {
+              path: 'ideas_and_discussions',
+              lazy: () =>
+                import('./routes/topic').then(convert(queryClient)),
+            },
+            {
+              path: 'questions_and_help',
+              lazy: () =>
+                import('./routes/topic').then(convert(queryClient)),
+            },
+            {
+              path: 'guides_and_resources',
+              lazy: () =>
+                import('./routes/topic').then(convert(queryClient)),
+            },
+          ],
         },
       ],
       HydrateFallback,
