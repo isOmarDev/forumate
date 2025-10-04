@@ -12,16 +12,15 @@ import type {
 
 import { api } from './api-client';
 
-const getUser = async (): Promise<User> => {
-  const response = await api.get('/me');
-
-  return response.data;
+const BASE_PATH = 'auth';
+const authPaths = {
+  login: `${BASE_PATH}/login`,
+  register: `${BASE_PATH}/register`,
+  logout: `${BASE_PATH}/logout`,
+  me: `${BASE_PATH}/me`,
 };
 
-const logout = (): Promise<void> => {
-  return api.post('/logout');
-};
-
+// Login user
 export const loginInputSchema = z.object({
   email: z
     .email({ error: 'Invalid email address' })
@@ -39,9 +38,10 @@ export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (
   data: LoginInput,
 ): Promise<AuthResponse> => {
-  return api.post('/login', data);
+  return api.post(authPaths.login, data);
 };
 
+// Register user
 export const registerInputSchema = z.object({
   firstName: z.string().min(1, 'Required'),
   lastName: z.string().min(1, 'Required'),
@@ -61,7 +61,18 @@ export type RegisterInput = z.infer<typeof registerInputSchema>;
 const registerWithEmailAndPassword = (
   data: RegisterInput,
 ): Promise<AuthResponse> => {
-  return api.post('/register', data);
+  return api.post(authPaths.register, data);
+};
+
+// Get user
+const getUser = async (): Promise<User> => {
+  const response = await api.get(authPaths.me);
+  return response.data;
+};
+
+// Logout user
+const logout = (): Promise<void> => {
+  return api.post(authPaths.logout);
 };
 
 const authConfig = {
