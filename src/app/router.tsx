@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
-import { AppLayout } from '@/components/layouts/app';
+import { AppLayout } from '@/components/layouts/app-layout';
 import { paths } from '@/config/paths';
 
 import { AuthRoute } from './routes/auth/auth-route';
@@ -35,11 +35,30 @@ export const createAppRouter = (queryClient: QueryClient) =>
           lazy: () =>
             import('./routes/home').then(convert(queryClient)),
         },
+
+        // Posts
         {
-          path: paths.popular.path,
+          path: paths.posts.latest.path,
+          lazy: () =>
+            import('./routes/home').then(convert(queryClient)),
+        },
+        {
+          path: paths.posts.top.path,
+          lazy: () =>
+            import('./routes/home').then(convert(queryClient)),
+        },
+        {
+          path: paths.posts.trending.path,
+          lazy: () =>
+            import('./routes/home').then(convert(queryClient)),
+        },
+        {
+          path: paths.posts.popular.path,
           lazy: () =>
             import('./routes/popular').then(convert(queryClient)),
         },
+
+        // Topics
         {
           path: paths.topics.root.path,
           lazy: () =>
@@ -70,8 +89,10 @@ export const createAppRouter = (queryClient: QueryClient) =>
       ],
       HydrateFallback,
     },
+
+    // Auth
     {
-      element: <AuthRoute />,
+      Component: AuthRoute,
       children: [
         {
           path: paths.auth.login.path,
@@ -88,6 +109,8 @@ export const createAppRouter = (queryClient: QueryClient) =>
       ],
       HydrateFallback,
     },
+
+    // Not found
     {
       path: '*',
       lazy: () =>
