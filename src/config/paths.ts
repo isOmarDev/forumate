@@ -3,10 +3,28 @@ export const paths = {
     path: '/',
     getHref: () => '/',
   },
-  popular: {
-    path: '/popular',
-    getHref: () => '/popular',
+
+  // Posts
+  posts: {
+    latest: {
+      path: '/latest',
+      getHref: () => '/latest',
+    },
+    top: {
+      path: '/top',
+      getHref: () => '/top',
+    },
+    trending: {
+      path: '/trending',
+      getHref: () => '/trending',
+    },
+    popular: {
+      path: '/popular',
+      getHref: () => '/popular',
+    },
   },
+
+  // Auth
   auth: {
     register: {
       path: '/register',
@@ -19,6 +37,8 @@ export const paths = {
         `/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
     },
   },
+
+  // Topics
   topics: {
     root: {
       path: '/topics',
