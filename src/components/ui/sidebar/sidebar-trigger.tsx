@@ -12,8 +12,7 @@ export const SidebarTrigger = ({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) => {
-  const { open, openMobile, isMobile, toggleSidebar } = useSidebar();
-  const isSidebarOpen = isMobile ? openMobile : open;
+  const { isMobile, isSidebarOpen, toggleSidebar } = useSidebar();
 
   return (
     <Tooltip>
@@ -23,7 +22,7 @@ export const SidebarTrigger = ({
           data-slot="sidebar-trigger"
           variant="ghost"
           size="icon"
-          className={cn('size-9 rounded-lg', className)}
+          className={cn('rounded-xl', className)}
           onClick={(event) => {
             onClick?.(event);
             toggleSidebar();
@@ -35,10 +34,7 @@ export const SidebarTrigger = ({
         </Button>
       </TooltipTrigger>
 
-      <TooltipContent
-        side={isMobile ? 'right' : 'bottom'}
-        align="center"
-      >
+      <TooltipContent align={isMobile ? 'center' : 'start'}>
         {isSidebarOpen ? 'Close sidebar' : 'Open sidebar'}
       </TooltipContent>
     </Tooltip>
