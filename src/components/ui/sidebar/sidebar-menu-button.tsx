@@ -44,6 +44,7 @@ const sidebarMenuButtonVariants = cva(
         default: 'h-8 text-sm',
         sm: 'h-7 text-xs',
         lg: 'h-12 rounded-xl text-sm',
+        icon: 'size-10',
       },
       animateIcon: {
         true: '[&>svg]:group-hover/menu-button:animate-pop',
