@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { AvatarInitials } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/ui/avatar';
 import { Button, type ButtonProps } from '@/components/ui/button';
 import {
   Dropdown,
@@ -34,7 +34,11 @@ const ProfileAvatarButton = ({
       tooltip={{ children: 'Profile menu', align: 'end' }}
       {...props}
     >
-      <AvatarInitials className="rounded-full" user={user} />
+      <UserAvatar
+        imageUrl={`${user.profileImageUrl}&flip=true`}
+        firstName={user.firstName}
+        lastName={user.lastName}
+      />
     </Button>
   );
 };
@@ -45,10 +49,12 @@ const UserBadge = ({ user }: { user: User }) => (
     gap={2}
     align="center"
   >
-    <AvatarInitials
-      className="bg-primary text-primary-foreground"
-      user={user}
+    <UserAvatar
+      imageUrl={user.profileImageUrl}
+      firstName={user.firstName}
+      lastName={user.lastName}
     />
+
     <Stack className="grid flex-1 text-left text-sm leading-tight">
       <span className="truncate font-medium">
         {getFullName(user.firstName, user.lastName)}
