@@ -68,15 +68,15 @@ export function createAvatar({
   backgroundColor = 'random',
   size = 64,
 }: CreateAvatarOptions = {}) {
-  const chosenStyle =
+  const avatarStyle =
     style ??
     DICEBEAR_STYLES[
       Math.floor(Math.random() * DICEBEAR_STYLES.length)
     ];
 
-  const chosenSeed = seed ?? crypto.randomUUID();
+  const avatarSeed = seed ?? crypto.randomUUID();
 
-  const chosenBackground =
+  const avatarBackground =
     backgroundColor === 'random'
       ? DICEBEAR_BACKGROUND_COLORS[
           Math.floor(
@@ -86,10 +86,10 @@ export function createAvatar({
       : backgroundColor;
 
   const params = new URLSearchParams({
-    seed: chosenSeed,
-    backgroundColor: chosenBackground,
+    seed: avatarSeed,
+    backgroundColor: avatarBackground,
     size: size.toString(),
   });
 
-  return `https://api.dicebear.com/9.x/${chosenStyle}/svg?${params.toString()}`;
+  return `https://api.dicebear.com/9.x/${avatarStyle}/svg?${params.toString()}`;
 }
