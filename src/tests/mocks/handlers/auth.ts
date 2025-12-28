@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { HttpResponse, http } from 'msw';
 
 import { env } from '@/config/env';
+import { createAvatar } from '@/utils/create-avatar';
 
 import { db, persistDb } from '../db';
 import {
@@ -57,6 +58,7 @@ export const authHandlers = [
 
       db.user.create({
         ...userObject,
+        profileImageUrl: createAvatar(),
         role: 'USER',
         password: hash(userObject.password),
       });
