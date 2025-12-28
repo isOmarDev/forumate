@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn';
 import { Button } from './button';
 import { type ButtonVariantsProps } from './button-variants';
 
-type ButtonLinkProps = ButtonVariantsProps &
+type ButtonNavLinkProps = ButtonVariantsProps &
   NavLinkProps &
   React.RefAttributes<HTMLAnchorElement> & {
     isActive?: boolean;
@@ -18,7 +18,7 @@ export const ButtonNavLink = ({
   size,
   isActive,
   ...props
-}: ButtonLinkProps) => {
+}: ButtonNavLinkProps) => {
   return (
     <Button variant={variant} size={size} asChild>
       <NavLink
