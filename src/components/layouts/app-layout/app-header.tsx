@@ -32,12 +32,10 @@ const HeaderRight = () => {
 
   return (
     <Stack align="center" gap={2}>
+      {isMobile && <SearchButton />}
       {userData ? (
         <>
-          <Stack>
-            {isMobile && <SearchButton />}
-            <CreatePostLink isMobile={isMobile} />
-          </Stack>
+          <CreatePostLink isMobile={isMobile} />
           <ProfileMenu user={userData} />
         </>
       ) : (
@@ -49,7 +47,7 @@ const HeaderRight = () => {
 
 export const AppHeader = () => {
   return (
-    <header className="flex items-center justify-between border-b px-4 py-3">
+    <header className="sticky top-0 z-50 flex items-center justify-between border-b bg-background px-4 py-3">
       <HeaderLeft />
       <HeaderCenter />
       <HeaderRight />
