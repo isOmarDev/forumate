@@ -44,9 +44,9 @@ export const paths = {
       path: '/topics',
       getHref: () => '/topics',
     },
-    newAndUpdates: {
-      path: '/topics/new_and_updates',
-      getHref: () => '/topics/new_and_updates',
+    newsAndUpdates: {
+      path: '/topics/news_and_updates',
+      getHref: () => '/topics/news_and_updates',
     },
     ideasAndDiscussions: {
       path: '/topics/ideas_and_discussions',
