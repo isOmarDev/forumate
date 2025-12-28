@@ -1,8 +1,8 @@
 import {
-  SparklesIcon,
   OrigamiIcon,
-  WandSparklesIcon,
   LibraryBigIcon,
+  SirenIcon,
+  LifeBuoyIcon,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
@@ -19,8 +19,8 @@ import {
 const navTopics = [
   {
     title: 'News & Updates',
-    path: paths.topics.newAndUpdates.path,
-    icon: SparklesIcon,
+    path: paths.topics.newsAndUpdates.path,
+    icon: SirenIcon,
   },
   {
     title: 'Ideas & Discussions',
@@ -30,7 +30,7 @@ const navTopics = [
   {
     title: 'Questions & Help',
     path: paths.topics.questionsAndHelp.path,
-    icon: WandSparklesIcon,
+    icon: LifeBuoyIcon,
   },
   {
     title: 'Guides & Resources',
