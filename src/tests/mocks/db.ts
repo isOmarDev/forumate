@@ -8,31 +8,28 @@ const models = {
     lastName: String,
     email: String,
     password: String,
-    teamId: String,
+    profileImageUrl: String,
     role: String,
     bio: String,
     createdAt: Date.now,
   },
-  team: {
+  post: {
     id: primaryKey(nanoid),
-    name: String,
-    description: String,
-    createdAt: Date.now,
-  },
-  discussion: {
-    id: primaryKey(nanoid),
+    authorId: String,
     title: String,
     body: String,
-    authorId: String,
-    teamId: String,
+    topic: String,
+    topicPath: String,
     createdAt: Date.now,
+    updatedAt: Date.now,
   },
   comment: {
     id: primaryKey(nanoid),
-    body: String,
+    postId: String,
     authorId: String,
-    discussionId: String,
+    body: String,
     createdAt: Date.now,
+    updatedAt: Date.now,
   },
 };
 
@@ -87,9 +84,9 @@ export const persistDb = async (model: Model) => {
 export const initializeDb = async () => {
   const database = await loadDb();
   Object.entries(db).forEach(([key, model]) => {
-    const dataEntres = database[key];
-    if (dataEntres) {
-      dataEntres?.forEach((entry: Record<string, any>) => {
+    const dataEntries = database[key];
+    if (dataEntries) {
+      dataEntries?.forEach((entry: Record<string, any>) => {
         model.create(entry);
       });
     }
