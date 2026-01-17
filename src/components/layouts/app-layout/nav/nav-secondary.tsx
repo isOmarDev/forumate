@@ -9,6 +9,7 @@ import { SidebarMenuButton, useSidebar } from '../../../ui/sidebar';
 
 const LoginLink = () => {
   const { isSidebarOpen } = useSidebar();
+
   const { pathname } = useLocation();
   const loginPath = paths.auth.login.getHref(pathname);
 
@@ -42,7 +43,7 @@ export const NavSecondary = () => {
   const { data: userData } = useUser();
 
   if (userData) {
-    return <></>;
+    return null;
   }
 
   return <LoginLink />;
