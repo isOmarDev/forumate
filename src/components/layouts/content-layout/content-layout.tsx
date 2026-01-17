@@ -12,16 +12,11 @@ export const ContentLayout = ({
 }: ContentLayoutProps) => {
   return (
     <div {...props}>
-      <div
-        className={cn(
-          'px-4 py-6 sm:px-6 md:px-6',
-          hideTitle && 'hidden',
-        )}
-      >
-        <h1 className="text-3xl font-black">{title}</h1>
+      <div className={cn('px-5 pt-6', hideTitle && 'hidden py-0')}>
+        <h1 className="text-4xl font-bold">{title}</h1>
       </div>
 
-      <div className="px-4 py-6 sm:px-6 md:px-8">{children}</div>
+      <div className="px-5 py-6">{children}</div>
     </div>
   );
 };
