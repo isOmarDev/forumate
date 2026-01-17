@@ -25,6 +25,8 @@ const convert = (queryClient: QueryClient) => (m: any) => {
 
 const HydrateFallback = () => null;
 
+const FEED_SORTS = ['latest', 'top', 'trending'] as const;
+
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
@@ -32,57 +34,52 @@ export const createAppRouter = (queryClient: QueryClient) =>
       children: [
         {
           path: paths.home.path,
-          lazy: () =>
-            import('./routes/home').then(convert(queryClient)),
-        },
-
-        // Posts
-        {
-          path: paths.posts.latest.path,
-          lazy: () =>
-            import('./routes/home').then(convert(queryClient)),
-        },
-        {
-          path: paths.posts.top.path,
-          lazy: () =>
-            import('./routes/home').then(convert(queryClient)),
-        },
-        {
-          path: paths.posts.trending.path,
-          lazy: () =>
-            import('./routes/home').then(convert(queryClient)),
-        },
-        {
-          path: paths.posts.popular.path,
-          lazy: () =>
-            import('./routes/popular').then(convert(queryClient)),
-        },
-
-        // Topics
-        {
-          path: paths.topics.root.path,
-          lazy: () =>
-            import('./routes/topics').then(convert(queryClient)),
           children: [
+            // Feed
             {
-              path: 'new_and_updates',
+              index: true,
               lazy: () =>
-                import('./routes/topic').then(convert(queryClient)),
+                import('./routes/feed').then(convert(queryClient)),
             },
-            {
-              path: 'ideas_and_discussions',
+            ...FEED_SORTS.map((sort) => ({
+              path: paths.feed[sort].path,
               lazy: () =>
-                import('./routes/topic').then(convert(queryClient)),
-            },
+                import('./routes/feed').then(convert(queryClient)),
+            })),
+
+            // Topics
             {
-              path: 'questions_and_help',
-              lazy: () =>
-                import('./routes/topic').then(convert(queryClient)),
-            },
-            {
-              path: 'guides_and_resources',
-              lazy: () =>
-                import('./routes/topic').then(convert(queryClient)),
+              path: paths.topics.root.path,
+              children: [
+                {
+                  index: true,
+                  lazy: () =>
+                    import('./routes/topics').then(
+                      convert(queryClient),
+                    ),
+                },
+
+                // Topic feed
+                {
+                  path: paths.topics.topic.path,
+                  children: [
+                    {
+                      index: true,
+                      lazy: () =>
+                        import('./routes/topic-feed').then(
+                          convert(queryClient),
+                        ),
+                    },
+                    ...FEED_SORTS.map((sort) => ({
+                      path: sort,
+                      lazy: () =>
+                        import('./routes/topic-feed').then(
+                          convert(queryClient),
+                        ),
+                    })),
+                  ],
+                },
+              ],
             },
           ],
         },
@@ -110,7 +107,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
       HydrateFallback,
     },
 
-    // Not found
+    // 404
     {
       path: '*',
       lazy: () =>
