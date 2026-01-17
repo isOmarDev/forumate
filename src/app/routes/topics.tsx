@@ -8,7 +8,9 @@ const TopicsRoute = () => {
   return (
     <>
       <Head title={HEAD_TITLE} description={HEAD_DESCRIPTION} />
-      <div data-testid="topics">{/* <h1>home here</h1> */}</div>
+      <div data-testid="topics">
+        <h1>topics</h1>
+      </div>
     </>
   );
 };
