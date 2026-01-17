@@ -29,6 +29,7 @@ export const Head = ({
 
   return (
     <Helmet
+      key={location.pathname}
       helmetData={helmetData}
       title={title ? `${title} | Forumate` : undefined}
       defaultTitle="Forumate"
