@@ -8,11 +8,11 @@ export const NavLogo = () => {
     <SidebarMenuButton
       asChild
       size="lg"
-      className="hover:bg-transparent"
+      className="hover:bg-transparent active:bg-transparent"
     >
       <Link to="/">
         <FishSymbolIcon className="h-5 w-5 shrink-0 stroke-[2.5]" />
-        <span className="text-xl font-black">Forumate</span>
+        <span className="font-logo text-xl">Forumate</span>
       </Link>
     </SidebarMenuButton>
   );
