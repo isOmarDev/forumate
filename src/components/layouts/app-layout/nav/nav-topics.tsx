@@ -7,6 +7,7 @@ import {
 import { Link, useLocation } from 'react-router';
 
 import { paths } from '@/config/paths';
+import { slugify } from '@/utils/slugify';
 
 import {
   SidebarGroup,
@@ -19,22 +20,24 @@ import {
 const navTopics = [
   {
     title: 'News & Updates',
-    path: paths.topics.newsAndUpdates.path,
+    path: paths.topics.topic.getHref(slugify('news and updates')),
     icon: SirenIcon,
   },
   {
     title: 'Ideas & Discussions',
-    path: paths.topics.ideasAndDiscussions.path,
+    path: paths.topics.topic.getHref(
+      slugify('ideas and discussions'),
+    ),
     icon: OrigamiIcon,
   },
   {
     title: 'Questions & Help',
-    path: paths.topics.questionsAndHelp.path,
+    path: paths.topics.topic.getHref(slugify('questions and help')),
     icon: LifeBuoyIcon,
   },
   {
     title: 'Guides & Resources',
-    path: paths.topics.guidesAndResources.path,
+    path: paths.topics.topic.getHref(slugify('guides and Resources')),
     icon: LibraryBigIcon,
   },
 ];
@@ -54,7 +57,7 @@ export const NavTopics = () => {
               asChild
               size="lg"
               tooltip={topic.title}
-              isActive={pathname === topic.path}
+              isActive={pathname.startsWith(topic.path)}
               animateIcon
             >
               <Link to={topic.path}>
