@@ -1,5 +1,7 @@
-import { FlameIcon, HouseIcon } from 'lucide-react';
+import { HouseIcon } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router';
+
+import { SORT_OPTIONS } from '@/features/posts/consts/sort';
 
 import {
   SidebarGroup,
@@ -14,12 +16,19 @@ const navMain = [
     path: '/',
     icon: HouseIcon,
   },
-  {
-    title: 'Popular',
-    path: '/popular',
-    icon: FlameIcon,
-  },
 ];
+
+export const isHomeActive = (pathname: string): boolean => {
+  if (pathname === '/') return true;
+
+  const segments = pathname.split('/').filter(Boolean);
+
+  if (segments.length !== 1) return false;
+
+  return SORT_OPTIONS.includes(
+    segments[0] as (typeof SORT_OPTIONS)[number],
+  );
+};
 
 export const NavMain = () => {
   const { pathname } = useLocation();
@@ -34,7 +43,7 @@ export const NavMain = () => {
               size="lg"
               tooltip={item.title}
               animateIcon
-              isActive={pathname === item.path}
+              isActive={isHomeActive(pathname)}
             >
               <NavLink to={item.path}>
                 <item.icon className="stroke-[1.25]" />
