@@ -9,6 +9,12 @@ export const enableMocking = async () => {
     await initializeDb();
     await seedDb();
 
-    return worker.start();
+    return worker.start({
+      onUnhandledRequest(request, print) {
+        // Bypass DiceBear requests
+        if (request.url.includes('dicebear.com')) return;
+        print.warning();
+      },
+    });
   }
 };
