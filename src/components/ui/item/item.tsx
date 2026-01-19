@@ -6,7 +6,7 @@ import { cn } from '@/lib/cn';
 
 const itemVariants = cva(
   cn(
-    'group/item flex flex-wrap items-center',
+    'group/item relative flex flex-wrap items-center',
     'rounded-md border border-transparent outline-none',
     'text-sm transition-colors duration-100',
     'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-accent/50',
@@ -30,14 +30,14 @@ const itemVariants = cva(
   },
 );
 
-export function Item({
+export const Item = ({
   className,
   variant = 'default',
   size = 'default',
   asChild = false,
   ...props
 }: React.ComponentProps<'div'> &
-  VariantProps<typeof itemVariants> & { asChild?: boolean }) {
+  VariantProps<typeof itemVariants> & { asChild?: boolean }) => {
   const Comp = asChild ? Slot : 'div';
   return (
     <Comp
@@ -48,4 +48,4 @@ export function Item({
       {...props}
     />
   );
-}
+};
