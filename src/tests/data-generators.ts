@@ -4,6 +4,8 @@ import { paths } from '@/config/paths';
 import type { User } from '@/types/api';
 import { createAvatar } from '@/utils/create-avatar';
 
+import { slugify } from './mocks/utils';
+
 const generateUser = () => ({
   id: faker.string.uuid(),
   firstName: faker.person.firstName(),
@@ -28,19 +30,27 @@ const generatePost = () => {
   const topics = [
     {
       title: 'News & Updates',
-      path: paths.topics.newsAndUpdates.path,
+      path: paths.topics.topic.getHref(slugify('news and updates')),
+      slug: slugify('news and updates'),
     },
     {
       title: 'Ideas & Discussions',
-      path: paths.topics.ideasAndDiscussions.path,
+      path: paths.topics.topic.getHref(
+        slugify('ideas and discussions'),
+      ),
+      slug: slugify('ideas and discussions'),
     },
     {
       title: 'Questions & Help',
-      path: paths.topics.questionsAndHelp.path,
+      path: paths.topics.topic.getHref(slugify('questions and help')),
+      slug: slugify('questions and help'),
     },
     {
       title: 'Guides & Resources',
-      path: paths.topics.guidesAndResources.path,
+      path: paths.topics.topic.getHref(
+        slugify('guides and Resources'),
+      ),
+      slug: slugify('guides and Resources'),
     },
   ];
 
@@ -50,8 +60,11 @@ const generatePost = () => {
     id: faker.string.uuid(),
     title: faker.lorem.sentence(),
     body: faker.lorem.paragraphs(3),
-    topic: randomTopic.title,
-    topicPath: randomTopic.path,
+    topic: {
+      name: randomTopic.title,
+      path: randomTopic.path,
+      slug: randomTopic.slug,
+    },
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };
