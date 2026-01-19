@@ -2,13 +2,15 @@ import { NavLink, type NavLinkProps } from 'react-router';
 
 import { cn } from '@/lib/cn';
 
-import { Button } from './button';
-import { type ButtonVariantsProps } from './button-variants';
+import {
+  buttonVariants,
+  type ButtonVariantsProps,
+} from './button-variants';
 
 type ButtonNavLinkProps = ButtonVariantsProps &
   NavLinkProps &
   React.RefAttributes<HTMLAnchorElement> & {
-    isActive?: boolean;
+    isActiveFallback?: boolean;
   };
 
 export const ButtonNavLink = ({
@@ -16,16 +18,31 @@ export const ButtonNavLink = ({
   to,
   variant = 'ghost',
   size,
-  isActive,
+  isActiveFallback,
   ...props
 }: ButtonNavLinkProps) => {
   return (
-    <Button variant={variant} size={size} asChild>
-      <NavLink
-        to={to}
-        className={cn(isActive && 'bg-secondary', className)}
-        {...props}
-      />
-    </Button>
+    <NavLink
+      to={to}
+      className={(navLinkProps) => {
+        const customClassName =
+          typeof className === 'function'
+            ? className(navLinkProps)
+            : className;
+
+        const isActive = navLinkProps.isActive || isActiveFallback;
+
+        return cn(
+          buttonVariants({
+            variant: isActive ? 'secondary' : variant,
+            size,
+            className: 'font-normal',
+          }),
+          isActive && 'font-medium',
+          customClassName,
+        );
+      }}
+      {...props}
+    />
   );
 };
