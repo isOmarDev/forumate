@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { delay } from 'msw';
+import { customAlphabet } from 'nanoid';
 
 import { db } from './db';
 
@@ -51,13 +52,13 @@ const omit = <T extends object>(obj: T, keys: string[]): T => {
 export const sanitizeUser = <O extends object>(user: O) =>
   omit<O>(user, ['password', 'iat']);
 
-export function authenticate({
+export const authenticate = ({
   email,
   password,
 }: {
   email: string;
   password: string;
-}) {
+}) => {
   const user = db.user.findFirst({
     where: {
       email: {
@@ -74,11 +75,11 @@ export function authenticate({
   const sanitizedUser = sanitizeUser(user);
   const encodedToken = encode(sanitizedUser);
   return { user: sanitizedUser, jwt: encodedToken };
-}
+};
 
 export const AUTH_COOKIE = `forumate_app_token`;
 
-export function requireAuth(cookies: Record<string, string>) {
+export const requireAuth = (cookies: Record<string, string>) => {
   try {
     const encodedToken =
       cookies[AUTH_COOKIE] || Cookies.get(AUTH_COOKIE);
@@ -104,10 +105,25 @@ export function requireAuth(cookies: Record<string, string>) {
     console.error(err);
     return { error: 'Unauthorized', user: null };
   }
-}
+};
 
-export function requireAdmin(user: any) {
+export const requireAdmin = (user: any) => {
   if (user.role !== 'ADMIN') {
     throw Error('Unauthorized');
   }
-}
+};
+
+export const slugify = (text: string): string => {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special chars
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/--+/g, '-') // Replace multiple hyphens with single
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing dashes
+};
+
+export const generateSlugId = customAlphabet(
+  'abcdefghijklmnopqrstuvwxyz0123456789',
+  6,
+);
