@@ -18,8 +18,11 @@ const models = {
     authorId: String,
     title: String,
     body: String,
-    topic: String,
-    topicPath: String,
+    topic: {
+      name: String,
+      path: String,
+      slug: String,
+    },
     createdAt: Date.now,
     updatedAt: Date.now,
   },
