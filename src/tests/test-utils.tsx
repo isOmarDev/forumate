@@ -13,7 +13,7 @@ import {
 } from 'react-router';
 
 import { AppProvider } from '@/app/provider';
-import HomeRoute from '@/app/routes/home';
+import HomeRoute from '@/app/routes/feed';
 import { paths } from '@/config/paths';
 
 import { createUser as generateUser } from './data-generators';
