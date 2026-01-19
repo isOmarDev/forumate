@@ -37,8 +37,11 @@ export type AuthResponse = {
 export type Post = Entity<{
   title: string;
   body: string;
-  topic: string;
-  topicPath: string;
+  topic: {
+    name: string;
+    path: string;
+    slug: string;
+  };
   author: User;
 }>;
 
