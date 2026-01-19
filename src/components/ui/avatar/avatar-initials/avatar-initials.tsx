@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn';
-import { getInitials } from '@/utils/get-initials';
+import { getNameInitials } from '@/utils/get-name-initials';
 
 import { Avatar, AvatarFallback } from '../avatar';
 
@@ -17,7 +17,7 @@ export const AvatarInitials = ({
   return (
     <Avatar className={cn('rounded-full', className)}>
       <AvatarFallback>
-        {getInitials(firstName, lastName)}
+        {getNameInitials(firstName, lastName)}
       </AvatarFallback>
     </Avatar>
   );
