@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 
 import { paths } from '@/config/paths';
+import { createAvatar } from '@/tests/create-avatar';
 import type { User } from '@/types/api';
-import { createAvatar } from '@/utils/create-avatar';
 
 import { slugify } from './mocks/utils';
 
