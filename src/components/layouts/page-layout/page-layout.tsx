@@ -16,7 +16,7 @@ export const PageLayout = ({
 }: PageLayoutProps) => {
   return (
     <div
-      className={cn('mx-auto flex w-full max-w-6xl', className)}
+      className={cn('mx-auto flex w-full max-w-5xl', className)}
       {...props}
     >
       <main className="min-w-0 flex-1">{children}</main>
