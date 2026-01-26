@@ -17,7 +17,7 @@ import HomeRoute from '@/app/routes/feed';
 import { paths } from '@/config/paths';
 
 import { createUser as generateUser } from './data-generators';
-import { db } from './mocks/db';
+import { db } from './mocks/db/db';
 import { AUTH_COOKIE, authenticate, hash } from './mocks/utils';
 
 export const createUser = async (userProperties?: any) => {

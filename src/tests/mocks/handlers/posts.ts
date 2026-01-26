@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 import { env } from '@/config/env';
 import { SORT_LABELS } from '@/features/posts/consts/sort';
 
-import { db } from '../db';
+import { db } from '../db/db';
 import { networkDelay, sanitizeUser } from '../utils';
 
 type PostFindManyOptions = Parameters<typeof db.post.findMany>[0];

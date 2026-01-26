@@ -2,9 +2,10 @@ import Cookies from 'js-cookie';
 import { HttpResponse, http } from 'msw';
 
 import { env } from '@/config/env';
-import { createAvatar } from '@/utils/create-avatar';
+import { createAvatar } from '@/tests/create-avatar';
 
-import { db, persistDb } from '../db';
+import { persistDb } from '../db/data-storage';
+import { db } from '../db/db';
 import {
   authenticate,
   hash,
@@ -25,14 +26,14 @@ type LoginBody = {
   password: string;
 };
 
-const BASE_PATH = `${env.APP_API_URL}/auth`;
+const BASE_PATH = `${env.APP_API_URL}/auth` as const;
 
 export const authPaths = {
   login: `${BASE_PATH}/login`,
   register: `${BASE_PATH}/register`,
   logout: `${BASE_PATH}/logout`,
   me: `${BASE_PATH}/me`,
-};
+} as const;
 
 export const authHandlers = [
   // Register handler

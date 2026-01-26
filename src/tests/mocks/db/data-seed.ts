@@ -1,5 +1,7 @@
-import { createPost, createUser } from './data-generators';
-import { db, persistDb } from './mocks/db';
+import { createPost, createUser } from '../../data-generators';
+
+import { persistDb } from './data-storage';
+import { db } from './db';
 
 const omitId = <T extends { id: any }>(obj: T): Omit<T, 'id'> => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

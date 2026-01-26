@@ -3,8 +3,7 @@ import { faker } from '@faker-js/faker';
 import { paths } from '@/config/paths';
 import { createAvatar } from '@/tests/create-avatar';
 import type { User } from '@/types/api';
-
-import { slugify } from './mocks/utils';
+import { slugify } from '@/utils/slugify';
 
 const generateUser = () => ({
   id: faker.string.uuid(),

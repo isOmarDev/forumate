@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 
-import { initializeDb, resetDb } from '@/tests/mocks/db';
+import { initializeDb, resetDb } from '@/tests/mocks/db/data-storage';
 import { server } from '@/tests/mocks/server';
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
