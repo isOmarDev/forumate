@@ -11,14 +11,15 @@ export const AuthLinks = ({ isMobile }: { isMobile?: boolean }) => {
 
   return (
     <>
-      <Button asChild size="lg">
-        <Link to={getLoginPath(pathname)}>Log in</Link>
-      </Button>
       {!isMobile && (
-        <Button variant="outline" asChild size="lg">
-          <Link to={getRegisterPath(pathname)}>Create account</Link>
+        <Button asChild size="lg">
+          <Link to={getLoginPath(pathname)}>Log in</Link>
         </Button>
       )}
+
+      <Button variant="outline" asChild size="lg">
+        <Link to={getRegisterPath(pathname)}>Create account</Link>
+      </Button>
     </>
   );
 };
