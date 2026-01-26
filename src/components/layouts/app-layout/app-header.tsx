@@ -3,6 +3,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Stack } from '@/components/ui/stack';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useUser } from '@/lib/auth';
+import { cn } from '@/lib/cn';
 
 import {
   AuthLinks,
@@ -16,8 +17,8 @@ const HeaderLeft = () => {
 
   return (
     <Stack align="center" gap={2}>
-      {isMobile && <LogoIconLink variant="ghost" />}
       <SidebarTrigger />
+      {isMobile && <LogoIconLink variant="ghost" />}
     </Stack>
   );
 };
@@ -39,7 +40,7 @@ const HeaderRight = () => {
           <ProfileMenu user={userData} />
         </>
       ) : (
-        <AuthLinks />
+        <AuthLinks isMobile={isMobile} />
       )}
     </Stack>
   );
@@ -47,7 +48,13 @@ const HeaderRight = () => {
 
 export const AppHeader = () => {
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between border-b bg-background px-4 py-3">
+    <header
+      className={cn(
+        'sticky top-0 z-50 flex items-center justify-between',
+        'border-b px-4 py-3',
+        'bg-background',
+      )}
+    >
       <HeaderLeft />
       <HeaderCenter />
       <HeaderRight />
