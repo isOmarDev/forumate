@@ -1,5 +1,8 @@
 import type { AxiosError } from 'axios';
-import { configureAuth } from 'react-query-auth';
+import {
+  configureAuth,
+  type ReactQueryAuthConfig,
+} from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router';
 import { z } from 'zod';
 
@@ -75,7 +78,11 @@ const logout = (): Promise<void> => {
   return api.post(authPaths.logout);
 };
 
-const authConfig = {
+const authConfig: ReactQueryAuthConfig<
+  User,
+  LoginInput,
+  RegisterInput
+> = {
   userFn: getUser,
   loginFn: async (data: LoginInput) => {
     const response = await loginWithEmailAndPassword(data);
