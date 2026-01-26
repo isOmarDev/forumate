@@ -103,8 +103,11 @@ export const PostPreview = ({
           </ItemHeader>
 
           <ItemContent className="gap-2">
-            <ItemTitle className="text-2xl group-hover/item:text-foreground-hover">
-              {post.title}
+            <ItemTitle
+              className="text-2xl group-hover/item:text-foreground-hover"
+              asChild
+            >
+              <h2>{post.title}</h2>
             </ItemTitle>
             <ItemDescription className="line-clamp-3">
               {post.body}
