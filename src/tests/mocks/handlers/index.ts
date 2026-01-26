@@ -5,17 +5,11 @@ import { env } from '@/config/env';
 import { networkDelay } from '../utils';
 
 import { authHandlers } from './auth';
-// import { commentsHandlers } from './comments';
-// import { discussionsHandlers } from './discussions';
-// import { teamsHandlers } from './teams';
-// import { usersHandlers } from './users';
+import { postsHandlers } from './posts';
 
 export const handlers = [
   ...authHandlers,
-  // ...commentsHandlers,
-  // ...discussionsHandlers,
-  // ...teamsHandlers,
-  // ...usersHandlers,
+  ...postsHandlers,
   http.get(`${env.APP_API_URL}/healthcheck`, async () => {
     await networkDelay();
     return HttpResponse.json({ ok: true });

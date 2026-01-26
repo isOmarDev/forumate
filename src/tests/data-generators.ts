@@ -1,23 +1,19 @@
-import {
-  randCompanyName,
-  randUserName,
-  randEmail,
-  randParagraph,
-  randUuid,
-  randPassword,
-  randCatchPhrase,
-} from '@ngneat/falso';
+import { faker } from '@faker-js/faker';
+
+import { paths } from '@/config/paths';
+import { createAvatar } from '@/tests/create-avatar';
+import type { User } from '@/types/api';
+import { slugify } from '@/utils/slugify';
 
 const generateUser = () => ({
-  id: randUuid() + Math.random(),
-  firstName: randUserName({ withAccents: false }),
-  lastName: randUserName({ withAccents: false }),
-  email: randEmail(),
-  password: randPassword(),
-  teamId: randUuid(),
-  teamName: randCompanyName(),
-  role: 'ADMIN',
-  bio: randParagraph(),
+  id: faker.string.uuid(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  email: faker.internet.email(),
+  password: 'TestPassword123!',
+  profileImageUrl: createAvatar(),
+  role: 'USER' as User['role'],
+  bio: faker.lorem.paragraph(),
   createdAt: Date.now(),
 });
 
@@ -29,52 +25,54 @@ export const createUser = <
   return { ...generateUser(), ...overrides };
 };
 
-const generateTeam = () => ({
-  id: randUuid(),
-  name: randCompanyName(),
-  description: randParagraph(),
-  createdAt: Date.now(),
-});
+const generatePost = () => {
+  const topics = [
+    {
+      title: 'News & Updates',
+      path: paths.topics.topic.getHref(slugify('news and updates')),
+      slug: slugify('news and updates'),
+    },
+    {
+      title: 'Ideas & Discussions',
+      path: paths.topics.topic.getHref(
+        slugify('ideas and discussions'),
+      ),
+      slug: slugify('ideas and discussions'),
+    },
+    {
+      title: 'Questions & Help',
+      path: paths.topics.topic.getHref(slugify('questions and help')),
+      slug: slugify('questions and help'),
+    },
+    {
+      title: 'Guides & Resources',
+      path: paths.topics.topic.getHref(
+        slugify('guides and Resources'),
+      ),
+      slug: slugify('guides and Resources'),
+    },
+  ];
 
-export const createTeam = <
-  T extends Partial<ReturnType<typeof generateTeam>>,
->(
-  overrides?: T,
-) => {
-  return { ...generateTeam(), ...overrides };
+  const randomTopic = topics[Math.floor(Math.random() * 4)];
+
+  return {
+    id: faker.string.uuid(),
+    title: faker.lorem.sentence(),
+    body: faker.lorem.paragraphs(3),
+    topic: {
+      name: randomTopic.title,
+      path: randomTopic.path,
+      slug: randomTopic.slug,
+    },
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
 };
 
-const generateDiscussion = () => ({
-  id: randUuid(),
-  title: randCatchPhrase(),
-  body: randParagraph(),
-  createdAt: Date.now(),
-});
-
-export const createDiscussion = <
-  T extends Partial<ReturnType<typeof generateDiscussion>>,
+export const createPost = <
+  T extends Partial<ReturnType<typeof generatePost>>,
 >(
-  overrides?: T & {
-    authorId?: string;
-    teamId?: string;
-  },
+  overrides?: T & { authorId: string },
 ) => {
-  return { ...generateDiscussion(), ...overrides };
-};
-
-const generateComment = () => ({
-  id: randUuid(),
-  body: randParagraph(),
-  createdAt: Date.now(),
-});
-
-export const createComment = <
-  T extends Partial<ReturnType<typeof generateComment>>,
->(
-  overrides?: T & {
-    authorId?: string;
-    discussionId?: string;
-  },
-) => {
-  return { ...generateComment(), ...overrides };
+  return { ...generatePost(), ...overrides };
 };

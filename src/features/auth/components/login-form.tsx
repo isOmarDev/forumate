@@ -15,7 +15,7 @@ export const LoginForm = () => {
   } = zodForm;
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit} data-testid="login-form">
       <Error
         className="rounded-sm bg-red-100 p-2"
         message={errors.root?.message}

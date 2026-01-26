@@ -3,6 +3,52 @@ export const paths = {
     path: '/',
     getHref: () => '/',
   },
+
+  // Feed
+  feed: {
+    latest: {
+      path: '/latest',
+      getHref: () => '/latest',
+    },
+    top: {
+      path: '/top',
+      getHref: () => '/top',
+    },
+    trending: {
+      path: '/trending',
+      getHref: () => '/trending',
+    },
+    popular: {
+      path: '/popular',
+      getHref: () => '/popular',
+    },
+  },
+
+  // Topics
+  topics: {
+    root: {
+      path: '/topics',
+      getHref: () => '/topics',
+    },
+    topic: {
+      path: ':topic',
+      getHref: (topic: string) => `/topics/${topic}`,
+      latest: {
+        path: ':topic/latest',
+        getHref: (topic: string) => `/topics/${topic}/latest`,
+      },
+      top: {
+        path: ':topic/top',
+        getHref: (topic: string) => `/topics/${topic}/top`,
+      },
+      trending: {
+        path: ':topic/trending',
+        getHref: (topic: string) => `/topics/${topic}/trending`,
+      },
+    },
+  },
+
+  // Auth
   auth: {
     register: {
       path: '/register',
@@ -13,12 +59,6 @@ export const paths = {
       path: '/login',
       getHref: (redirectTo?: string | null | undefined) =>
         `/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
-    },
-  },
-  app: {
-    root: {
-      path: '/app',
-      getHref: () => '/app',
     },
   },
 } as const;

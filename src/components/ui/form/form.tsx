@@ -17,6 +17,7 @@ import { ZodType, z } from 'zod';
 
 import { Label } from '@/components/ui/form/label';
 import { cn } from '@/lib/cn';
+import { type WithTestId } from '@/types/rtl';
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -168,19 +169,12 @@ function FormMessage({
 }
 
 const Form = ({
-  id,
   className,
   children,
-  onSubmit,
   ...props
-}: React.ComponentProps<'form'>) => {
+}: React.ComponentProps<'form'> & WithTestId) => {
   return (
-    <form
-      id={id}
-      className={cn('space-y-6', className)}
-      onSubmit={onSubmit}
-      {...props}
-    >
+    <form className={cn('space-y-6', className)} {...props}>
       {children}
     </form>
   );

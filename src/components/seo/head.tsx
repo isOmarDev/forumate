@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 
 import { env } from '@/config/env';
 
-type HeadProps = {
+export type HeadProps = {
   title?: string;
   description?: string;
   ogImage?: string;
@@ -21,7 +21,7 @@ const APP_URL = env.APP_URL;
 export const Head = ({
   title,
   description = DEFAULT_DESCRIPTION,
-}: HeadProps = {}) => {
+}: HeadProps) => {
   const location = useLocation();
 
   const url = `${APP_URL}${location.pathname}${location.search}`;
@@ -29,6 +29,7 @@ export const Head = ({
 
   return (
     <Helmet
+      key={location.pathname}
       helmetData={helmetData}
       title={title ? `${title} | Forumate` : undefined}
       defaultTitle="Forumate"

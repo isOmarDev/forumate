@@ -2,8 +2,10 @@ import Cookies from 'js-cookie';
 import { HttpResponse, http } from 'msw';
 
 import { env } from '@/config/env';
+import { createAvatar } from '@/tests/create-avatar';
 
-import { db, persistDb } from '../db';
+import { persistDb } from '../db/data-storage';
+import { db } from '../db/db';
 import {
   authenticate,
   hash,
@@ -24,8 +26,18 @@ type LoginBody = {
   password: string;
 };
 
+const BASE_PATH = `${env.APP_API_URL}/auth` as const;
+
+export const authPaths = {
+  login: `${BASE_PATH}/login`,
+  register: `${BASE_PATH}/register`,
+  logout: `${BASE_PATH}/logout`,
+  me: `${BASE_PATH}/me`,
+} as const;
+
 export const authHandlers = [
-  http.post(`${env.APP_API_URL}/register`, async ({ request }) => {
+  // Register handler
+  http.post(authPaths.register, async ({ request }) => {
     await networkDelay();
     try {
       const userObject = (await request.json()) as RegisterBody;
@@ -47,6 +59,7 @@ export const authHandlers = [
 
       db.user.create({
         ...userObject,
+        profileImageUrl: createAvatar(),
         role: 'USER',
         password: hash(userObject.password),
       });
@@ -75,7 +88,8 @@ export const authHandlers = [
     }
   }),
 
-  http.post(`${env.APP_API_URL}/login`, async ({ request }) => {
+  // Login handler
+  http.post(authPaths.login, async ({ request }) => {
     await networkDelay();
 
     try {
@@ -99,7 +113,8 @@ export const authHandlers = [
     }
   }),
 
-  http.post(`${env.APP_API_URL}/logout`, async () => {
+  // Logout handler
+  http.post(authPaths.logout, async () => {
     await networkDelay();
 
     // todo: remove once tests in Github Actions are fixed
@@ -115,7 +130,8 @@ export const authHandlers = [
     );
   }),
 
-  http.get(`${env.APP_API_URL}/me`, async ({ cookies }) => {
+  // Me handler
+  http.get(authPaths.me, async ({ cookies }) => {
     await networkDelay();
 
     try {

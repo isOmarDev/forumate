@@ -1,54 +1,32 @@
-import { Bubbles } from 'lucide-react';
-import { Link } from 'react-router';
+import { Slot } from '@radix-ui/react-slot';
 
 import { cn } from '@/lib/cn';
 
-import {
-  type LogoVariantsProps,
-  iconContainerVariants,
-  iconVariants,
-  textVariants,
-} from './logo-variant';
+import { logoVariants, type LogoVariantsProps } from './logo-variant';
 
-export type LogoProps = LogoVariantsProps & {
-  className?: string;
-  withText?: boolean;
-  withLink?: boolean;
-};
+export type LogoProps = React.ComponentProps<'div'> &
+  LogoVariantsProps & {
+    className?: string;
+    asChild?: boolean;
+  };
 
 export const Logo = ({
-  size,
-  variant,
-  className = '',
-  withText = false,
-  withLink = true,
+  orientation,
+  className,
+  asChild = false,
+  ...props
 }: LogoProps) => {
-  const logoContent = (
-    <>
-      <div className={iconContainerVariants({ size, variant })}>
-        <Bubbles className={iconVariants({ size })} />
-      </div>
+  const Comp = asChild ? Slot : 'div';
 
-      {withText && (
-        <span className={textVariants({ size, variant })}>
-          Forumate
-        </span>
+  return (
+    <Comp
+      className={cn(
+        logoVariants({
+          orientation,
+          className,
+        }),
       )}
-    </>
-  );
-
-  return withLink ? (
-    <Link
-      to="/"
-      className={cn('flex items-center gap-2 font-medium', className)}
-    >
-      {logoContent}
-    </Link>
-  ) : (
-    <div
-      className={cn('flex items-center gap-2 font-medium', className)}
-    >
-      {logoContent}
-    </div>
+      {...props}
+    />
   );
 };

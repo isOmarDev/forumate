@@ -3,16 +3,10 @@ import { useMemo } from 'react';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
+import { AppLayout } from '@/components/layouts/app-layout';
 import { paths } from '@/config/paths';
 
 import { AuthRoute } from './routes/auth/auth-route';
-
-// import {
-//   default as AppRoot,
-//   ErrorBoundary as AppRootErrorBoundary,
-// } from './routes/app/root';
-
-// import { ProtectedRoute } from '@/lib/auth';
 
 const convert = (queryClient: QueryClient) => (m: any) => {
   const {
@@ -31,21 +25,76 @@ const convert = (queryClient: QueryClient) => (m: any) => {
 
 const HydrateFallback = () => null;
 
+const FEED_SORTS = ['latest', 'top', 'trending'] as const;
+
 export const createAppRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
-      path: paths.home.path,
-      lazy: () => import('./routes/home').then(convert(queryClient)),
+      Component: AppLayout,
+      children: [
+        {
+          path: paths.home.path,
+          children: [
+            // Feed
+            {
+              index: true,
+              lazy: () =>
+                import('./routes/feed').then(convert(queryClient)),
+            },
+            ...FEED_SORTS.map((sort) => ({
+              path: paths.feed[sort].path,
+              lazy: () =>
+                import('./routes/feed').then(convert(queryClient)),
+            })),
+
+            // Topics
+            {
+              path: paths.topics.root.path,
+              children: [
+                {
+                  index: true,
+                  lazy: () =>
+                    import('./routes/topics').then(
+                      convert(queryClient),
+                    ),
+                },
+
+                // Topic feed
+                {
+                  path: paths.topics.topic.path,
+                  children: [
+                    {
+                      index: true,
+                      lazy: () =>
+                        import('./routes/topic-feed').then(
+                          convert(queryClient),
+                        ),
+                    },
+                    ...FEED_SORTS.map((sort) => ({
+                      path: sort,
+                      lazy: () =>
+                        import('./routes/topic-feed').then(
+                          convert(queryClient),
+                        ),
+                    })),
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
       HydrateFallback,
     },
+
+    // Auth
     {
-      element: <AuthRoute />,
+      Component: AuthRoute,
       children: [
         {
           path: paths.auth.login.path,
           lazy: () =>
             import('./routes/auth/login').then(convert(queryClient)),
-          HydrateFallback,
         },
         {
           path: paths.auth.register.path,
@@ -53,10 +102,12 @@ export const createAppRouter = (queryClient: QueryClient) =>
             import('./routes/auth/register').then(
               convert(queryClient),
             ),
-          HydrateFallback,
         },
       ],
+      HydrateFallback,
     },
+
+    // 404
     {
       path: '*',
       lazy: () =>

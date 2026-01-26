@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { cn } from '@/lib/cn';
 
-import { Logo } from '../ui/logo';
+import { LogoIconLink } from '../../ui/logo';
 
 type AuthLayoutProps = PropsWithChildren<{
   title: string;
@@ -31,7 +31,7 @@ export const AuthLayout = ({
       >
         <div className="w-full max-w-sm">
           <div className="mb-6 flex justify-center">
-            <Logo />
+            <LogoIconLink />
           </div>
 
           <Card>
