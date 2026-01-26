@@ -11,7 +11,7 @@ export const FeedLayout = ({
   ...props
 }: FeedLayoutProps) => {
   return (
-    <div className={cn('max-w-[630px]', className)} {...props}>
+    <div className={cn('max-w-[600px]', className)} {...props}>
       <div
         className={cn(
           'sticky top-[65px]',
