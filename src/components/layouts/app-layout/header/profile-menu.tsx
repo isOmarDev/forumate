@@ -21,7 +21,7 @@ import {
 import { Stack } from '@/components/ui/stack';
 import { useLogout } from '@/lib/auth';
 import type { User } from '@/types/api';
-import { getFullName } from '@/utils/get-full-name';
+import { getFullName } from '@/utils/name-utils';
 
 const ProfileAvatarButton = ({
   user,

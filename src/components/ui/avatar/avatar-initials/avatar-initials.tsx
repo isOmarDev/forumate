@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn';
-import { getNameInitials } from '@/utils/get-name-initials';
+import { getNameInitials } from '@/utils/name-utils';
 
 import { Avatar, AvatarFallback } from '../avatar';
 
